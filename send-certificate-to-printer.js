@@ -1,5 +1,19 @@
 document.addEventListener('DOMContentLoaded', findCertificate, false);
 
+function getMobileBrowser() {
+  var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    if (/windows phone/i.test(userAgent)) {
+        return "mobile";
+    }
+    if (/android/i.test(userAgent)) {
+        return "mobile";
+    }
+    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        return "mobile";
+    }
+    return "unknown";
+}
+
 function findCertificate(){
     var certificates = document.getElementsByClassName('certificate-wrapper');
     for (i = 0; i < certificates.length; i++){
@@ -14,12 +28,22 @@ function downloadCertificatePNG(){
 	var imageData = this.parentNode;
 	imageData = imageData.getElementsByClassName('kite-a-pult-certificate')[0];
 	imageData = imageData.getAttribute('src');
-	download(imageData, "certificate.png", "image/png");
+	if (getMobileBrowser() === "mobile"){
+		window.open(imageData);
+	}
+	else{
+		download(imageData, "certificate.png", "image/png");
+	}
 }
 
 function downloadCertificatePDF(){
 	var imageData = this.parentNode;
 	imageData = imageData.getElementsByClassName('download-pdf')[0];
 	imageData = imageData.getAttribute('data-pdf');
-	download(imageData, "certificate.pdf", "application/pdf");
+	if (getMobileBrowser() === "mobile"){
+		window.open(imageData);
+	}
+	else{
+		download(imageData, "certificate.pdf", "application/pdf");
+	}
 }
