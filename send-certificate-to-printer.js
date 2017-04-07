@@ -11,6 +11,9 @@ function getMobileBrowser() {
     if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
         return "mobile";
     }
+	if (/Safari/.test(userAgent)){
+		return "mobile";
+	}
     return "unknown";
 }
 
@@ -28,6 +31,7 @@ function downloadCertificatePNG(){
 	var imageData = this.parentNode;
 	imageData = imageData.getElementsByClassName('kite-a-pult-certificate')[0];
 	imageData = imageData.getAttribute('src');
+	console.log(imageData);
 	if (getMobileBrowser() === "mobile"){
 		window.open(imageData);
 	}
